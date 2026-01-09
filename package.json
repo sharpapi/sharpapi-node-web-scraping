@@ -1,0 +1,35 @@
+{
+  "name": "@sharpapi/sharpapi-node-web-scraping",
+  "version": "1.0.0",
+  "description": "SharpAPI.com Node.js SDK for Web Scraping API",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "sharpapi",
+    "api",
+    "api integration",
+    "restful api",
+    "nodejs",
+    "software development",
+    "web scraping",
+    "html extraction",
+    "data extraction"
+  ],
+  "author": "Dawid Makowski <contact@sharpapi.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@sharpapi/sharpapi-node-core": "file:../sharpapi-node-core"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sharpapi/sharpapi-node-web-scraping.git"
+  }
+}

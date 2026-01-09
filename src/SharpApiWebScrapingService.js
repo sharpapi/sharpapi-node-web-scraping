@@ -5,6 +5,15 @@ const { SharpApiCoreService } = require('@sharpapi/sharpapi-node-core');
  */
 class SharpApiWebScrapingService extends SharpApiCoreService {
   /**
+   * Creates a new SharpApiWebScrapingService instance
+   * @param {string} apiKey - Your SharpAPI API key
+   * @param {string} [apiBaseUrl='https://sharpapi.com/api/v1'] - API base URL
+   */
+  constructor(apiKey, apiBaseUrl = 'https://sharpapi.com/api/v1') {
+    super(apiKey, apiBaseUrl, '@sharpapi/sharpapi-node-web-scraping/1.0.1');
+  }
+
+  /**
    * Scrape a webpage URL and extract its content (synchronous endpoint)
    *
    * @param {string} url - The URL of the webpage to scrape

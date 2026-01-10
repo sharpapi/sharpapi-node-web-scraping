@@ -1,6 +1,6 @@
 {
   "name": "@sharpapi/sharpapi-node-web-scraping",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "SharpAPI.com Node.js SDK for Web Scraping API",
   "main": "src/index.js",
   "scripts": {

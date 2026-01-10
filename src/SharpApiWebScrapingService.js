@@ -2,6 +2,9 @@ const { SharpApiCoreService } = require('@sharpapi/sharpapi-node-core');
 
 /**
  * Service for accessing Web Scraping API using SharpAPI.com
+ *
+ * Fetches and extracts content from publicly accessible URLs, providing structured data
+ * including page metadata, content, links, and more in a machine-readable JSON format.
  */
 class SharpApiWebScrapingService extends SharpApiCoreService {
   /**
@@ -10,111 +13,35 @@ class SharpApiWebScrapingService extends SharpApiCoreService {
    * @param {string} [apiBaseUrl='https://sharpapi.com/api/v1'] - API base URL
    */
   constructor(apiKey, apiBaseUrl = 'https://sharpapi.com/api/v1') {
-    super(apiKey, apiBaseUrl, '@sharpapi/sharpapi-node-web-scraping/1.0.1');
+    super(apiKey, apiBaseUrl, '@sharpapi/sharpapi-node-web-scraping/1.0.2');
   }
 
   /**
    * Scrape a webpage URL and extract its content (synchronous endpoint)
    *
-   * @param {string} url - The URL of the webpage to scrape
-   * @returns {Promise<object>} - The scraped content
+   * Fetches and extracts structured data from any publicly accessible URL, including:
+   * - Page title and metadata (description, keywords, author)
+   * - Open Graph and Twitter card details
+   * - Headers and meta tags (content type, viewport, canonical URL, charset)
+   * - Structured content extraction (headings, paragraphs, key text elements)
+   * - Internal and external links for site structure analysis
+   * - Language detection for localization
+   * - Timestamped results for tracking
+   *
+   * @param {string} url - The URL of the webpage to scrape (e.g., 'https://example.com' or 'example.com')
+   * @returns {Promise<object>} - The scraped content with metadata, structured data, and links
+   *
+   * @example
+   * // Scrape a webpage
+   * const data = await service.scrapeUrl('https://sharpapi.com');
+   * console.log(data.title); // Page title
+   * console.log(data.description); // Meta description
+   * console.log(data.content); // Main content
+   * console.log(data.links); // Array of links found
    */
   async scrapeUrl(url) {
     const response = await this.makeRequest('GET', '/utilities/scrape_url', { url });
-    return response.data;
-  }
-
-  /**
-   * Scrape a webpage and extract its HTML content
-   *
-   * @param {string} url - The URL of the webpage to scrape
-   * @param {object} [options] - Additional options for scraping
-   * @param {boolean} [options.javascript=false] - Whether to execute JavaScript on the page
-   * @param {number} [options.timeout=30000] - Timeout in milliseconds
-   * @param {string} [options.userAgent] - Custom User-Agent string
-   * @param {object} [options.headers] - Custom headers to send with the request
-   * @param {string} [options.proxy] - Proxy to use for the request
-   * @returns {Promise<object>} - The scraped HTML content and metadata
-   */
-  async scrapeHtml(url, options = {}) {
-    const data = { url, ...options };
-    const response = await this.makeRequest('POST', '/utility/web-scraping/html', data);
-    return response.data;
-  }
-
-  /**
-   * Extract structured data from a webpage
-   *
-   * @param {string} url - The URL of the webpage to scrape
-   * @param {object} [options] - Additional options for scraping
-   * @param {boolean} [options.javascript=false] - Whether to execute JavaScript on the page
-   * @param {number} [options.timeout=30000] - Timeout in milliseconds
-   * @param {string} [options.userAgent] - Custom User-Agent string
-   * @param {object} [options.headers] - Custom headers to send with the request
-   * @param {string} [options.proxy] - Proxy to use for the request
-   * @returns {Promise<object>} - The extracted structured data
-   */
-  async extractStructuredData(url, options = {}) {
-    const data = { url, ...options };
-    const response = await this.makeRequest('POST', '/utility/web-scraping/structured-data', data);
-    return response.data;
-  }
-
-  /**
-   * Take a screenshot of a webpage
-   *
-   * @param {string} url - The URL of the webpage to screenshot
-   * @param {object} [options] - Additional options for screenshot
-   * @param {boolean} [options.fullPage=false] - Whether to capture the full page or just the viewport
-   * @param {number} [options.width=1280] - Viewport width
-   * @param {number} [options.height=800] - Viewport height
-   * @param {boolean} [options.javascript=true] - Whether to execute JavaScript on the page
-   * @param {number} [options.timeout=30000] - Timeout in milliseconds
-   * @param {string} [options.userAgent] - Custom User-Agent string
-   * @param {object} [options.headers] - Custom headers to send with the request
-   * @param {string} [options.proxy] - Proxy to use for the request
-   * @returns {Promise<object>} - The screenshot data (base64 encoded)
-   */
-  async takeScreenshot(url, options = {}) {
-    const data = { url, ...options };
-    const response = await this.makeRequest('POST', '/utility/web-scraping/screenshot', data);
-    return response.data;
-  }
-
-  /**
-   * Extract text content from a webpage
-   *
-   * @param {string} url - The URL of the webpage to scrape
-   * @param {object} [options] - Additional options for scraping
-   * @param {boolean} [options.javascript=false] - Whether to execute JavaScript on the page
-   * @param {number} [options.timeout=30000] - Timeout in milliseconds
-   * @param {string} [options.userAgent] - Custom User-Agent string
-   * @param {object} [options.headers] - Custom headers to send with the request
-   * @param {string} [options.proxy] - Proxy to use for the request
-   * @returns {Promise<object>} - The extracted text content
-   */
-  async extractText(url, options = {}) {
-    const data = { url, ...options };
-    const response = await this.makeRequest('POST', '/utility/web-scraping/text', data);
-    return response.data;
-  }
-
-  /**
-   * Extract links from a webpage
-   *
-   * @param {string} url - The URL of the webpage to scrape
-   * @param {object} [options] - Additional options for scraping
-   * @param {boolean} [options.javascript=false] - Whether to execute JavaScript on the page
-   * @param {number} [options.timeout=30000] - Timeout in milliseconds
-   * @param {string} [options.userAgent] - Custom User-Agent string
-   * @param {object} [options.headers] - Custom headers to send with the request
-   * @param {string} [options.proxy] - Proxy to use for the request
-   * @returns {Promise<object>} - The extracted links
-   */
-  async extractLinks(url, options = {}) {
-    const data = { url, ...options };
-    const response = await this.makeRequest('POST', '/utility/web-scraping/links', data);
-    return response.data;
+    return response;
   }
 }
 
